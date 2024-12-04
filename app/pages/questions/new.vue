@@ -14,7 +14,8 @@ const user = useSupabaseUser()
 const schema = insertQuestionSchema.omit({ authorId: true }).extend({
   choices: insertQuestionChoiceSchema
     .pick({ choice: true, id: true })
-    .array(),
+    .array()
+    .transform(choices => choices.filter(choice => choice.choice.trim() !== '')),
 })
 
 type Schema = z.output<typeof schema>
@@ -64,7 +65,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     event.data.choices.map(choice => ({ choice: choice.choice, question_id: data.id })),
   )
 
-  toast.add({ title: 'Succès', description: 'La question a bien été enregitrée.', color: 'success' })
+  toast.add({ title: 'Succès', description: 'La question a bien été enregistrée.', color: 'success' })
   navigateTo(`/questions/${data.id}`)
 }
 </script>

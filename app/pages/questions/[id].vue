@@ -7,11 +7,8 @@
       <h1 class="text-2xl font-medium mb-6">
         {{ question?.question }}
       </h1>
-      <p
-        v-if="userVote"
-        class="mb-6 font-semibold"
-      >
-        Vous avez déjà voté !
+      <p class="mb-6 font-medium text-gray-500 dark:text-gray-400">
+        Une seule réponse possible.
       </p>
       <ul class="space-y-2">
         <li
@@ -50,6 +47,7 @@
           <UForm
             :state
             :schema
+            :validate-on="[]"
             @submit="onSubmit"
           >
             <UFormField label="Autre:">
