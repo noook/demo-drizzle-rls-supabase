@@ -1,0 +1,3 @@
+ALTER TABLE "question_choices" ENABLE ROW LEVEL SECURITY;--> statement-breakpoint
+CREATE POLICY "users can create choices for their question" ON "question_choices" AS PERMISSIVE FOR INSERT TO "authenticated" WITH CHECK ((select auth.uid()) = (select author_id from questions where id = "question_choices"."question_id"));--> statement-breakpoint
+CREATE POLICY "users can read choices" ON "question_choices" AS PERMISSIVE FOR SELECT TO "authenticated" USING (true);
